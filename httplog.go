@@ -110,7 +110,7 @@ func (l *RequestLoggerEntry) Write(status, bytes int, header http.Header, elapse
 	}
 
 	l.Logger.WithLevel(statusLevel(status)).Fields(map[string]interface{}{
-		"httpResponse": responseLog,
+		"response": responseLog,
 	}).Msgf(msg)
 }
 
@@ -140,19 +140,19 @@ func requestLogFields(r *http.Request, concise bool) map[string]interface{} {
 	requestURL := fmt.Sprintf("%s://%s%s", scheme, r.Host, r.RequestURI)
 
 	requestFields := map[string]interface{}{
-		"requestURL":    requestURL,
-		"requestMethod": r.Method,
-		"requestPath":   r.URL.Path,
-		"remoteIP":      r.RemoteAddr,
-		"proto":         r.Proto,
+		"url":      requestURL,
+		"method":   r.Method,
+		"path":     r.URL.Path,
+		"remoteIp": r.RemoteAddr,
+		"proto":    r.Proto,
 	}
 	if reqID := middleware.GetReqID(r.Context()); reqID != "" {
-		requestFields["requestID"] = reqID
+		requestFields["requestId"] = reqID
 	}
 
 	if concise {
 		return map[string]interface{}{
-			"httpRequest": requestFields,
+			"request": requestFields,
 		}
 	}
 
@@ -163,7 +163,7 @@ func requestLogFields(r *http.Request, concise bool) map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"httpRequest": requestFields,
+		"request": requestFields,
 	}
 }
 

@@ -11,8 +11,8 @@ import (
 )
 
 var DefaultOptions = Options{
-	LogLevel:    "info",
-	JSON:        false,
+	LogLevel:    "debug",
+	JSON:        true,
 	Concise:     false,
 	Tags:        nil,
 	SkipHeaders: nil,
@@ -49,7 +49,7 @@ type Options struct {
 // of underlying zerolog pkg and its global logger.
 func Configure(opts Options) {
 	if opts.LogLevel == "" {
-		opts.LogLevel = "info"
+		opts.LogLevel = "debug"
 	}
 
 	// Pre-downcase all SkipHeaders
